@@ -1,2 +1,3 @@
-# Photo_Gallery_Java_Full_Stack
-Photo gallery full-stack java application
+# Photo Gallery -- Java Full-Stack
+
+Documentation: https://drive.google.com/drive/u/0/folders/1rWj1To9joq7GnTEcjiYjaPWle6H1gMKB
