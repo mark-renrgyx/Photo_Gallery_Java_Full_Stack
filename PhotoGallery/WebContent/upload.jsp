@@ -9,8 +9,9 @@
 <body>
 
 <form action="FileUpload">
-  <input type="file" name="pic" accept="image/*">
-  <input type="submit">
+	Description: <input type="text" name="description">
+	<input type="file" name="pic" accept="image/*">
+	<input type="submit">
 </form>
 
 </body>
