@@ -1,6 +1,5 @@
 package db;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -25,6 +24,11 @@ public class DBUtility {
 		return rs;
 	}
 	
+	/**
+	 * Get the `src` for each <img> in a List
+	 * 
+	 * @return
+	 */
 	public static List<String> getImages() {
 		List<String> imageLocations = new ArrayList<String>();
 		
@@ -39,7 +43,7 @@ public class DBUtility {
 			rs.getMetaData();
 			
 			while (rs.next()) {
-				imageLocations.add("img" + File.separator + rs.getString(1));
+				imageLocations.add("img" + "/" + rs.getString(1));
 			}
 			
 		} catch (SQLException e) {

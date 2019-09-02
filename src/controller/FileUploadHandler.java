@@ -74,6 +74,8 @@ public class FileUploadHandler extends HttpServlet {
 				// File uploaded successfully
 				request.setAttribute("message", "File Uploaded Successfully");
 				System.out.println("File(s) created at " + UPLOAD_DIRECTORY);
+				// TODO remove
+				System.out.println("TEST: " + request.getServletContext().getRealPath("img"));
 			} catch (Exception ex) {
 				request.setAttribute("message", "File Upload Failed due to " + ex);
 			}
@@ -82,6 +84,7 @@ public class FileUploadHandler extends HttpServlet {
 			request.setAttribute("message", "Sorry this Servlet only handles file upload request");
 		}
 		
-		request.getRequestDispatcher("/result.jsp").forward(request, response);
+		// request.getRequestDispatcher("/result.jsp").forward(request, response);
+		request.getRequestDispatcher("/home.jsp").forward(request, response);
 	}
 }

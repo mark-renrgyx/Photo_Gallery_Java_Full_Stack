@@ -15,6 +15,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="site_styles.css" />
+
 <title>Gallery</title>
 </head>
 <body>
@@ -22,30 +23,9 @@
 
 <a href="upload.jsp">Upload a file</a>
 
-	<%
-		List<String> dbImages = DBUtility.getImages();
-	%>
-
 <%
-	// dummy in files
-//	List<String> images = new ArrayList<String>();
-/* 	images.add("img/dummypic1.jpeg");
-	images.add("img/dummypic2.png");
-	images.add("img/dummypic3.jpeg");
-	images.add("img/dummypic4.jpg");
-	images.add("img/dummypic5.jpeg");
-	images.add("img/dummypic6.jpeg");
-	images.add("img/dummypic7.jpeg");
-	images.add("img/dummypic1.jpeg");
-	images.add("img/dummypic2.png");
-	images.add("img/dummypic3.jpeg");
-	images.add("img/dummypic4.jpg");
-	images.add("img/dummypic5.jpeg");
-	images.add("img/dummypic6.jpeg");
-	images.add("img/dummypic7a.jpeg"); */
-%>
+	List<String> dbImages = DBUtility.getImages();
 
-<%
 	Iterator<String> imageCursor = dbImages.iterator();
 	
 	String taggedImages = "";
@@ -56,8 +36,10 @@
 	}
 %>
 
-<div class="gallery">
-	<%= taggedImages %>
+<div class="gallery_container">
+	<div class="gallery">
+		<%=taggedImages%>
+	</div>
 </div>
 
 </body>

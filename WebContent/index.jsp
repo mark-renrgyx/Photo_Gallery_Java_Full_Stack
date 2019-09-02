@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="site_styles.css" />
+
 <title>Gallery Landing</title>
 </head>
 <body>
@@ -31,12 +33,7 @@ Password<input type="text" name="password"> <br />
 <input type="submit">
 </form>
 
-<p>Don't have an account yet?</p>
-<form action="Register" method="post">
-Email Address<input type="text" name="email" value="test"> <br />
-Password<input type="text" name="password"> <br />
-<input type="submit">
-</form>
+<p>Don't have an account yet?  Make one <a href="registration.jsp">here</a></p>
 
 </body>
 </html>

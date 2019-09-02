@@ -6,9 +6,19 @@ body {
 
 .thumbnail {
 	width : 240px;
+	margin: 5px;
 }
 
-p.error {
+.error {
 	font-size: 150%;
 	color: red;
+}
+
+div.gallery_container {
+	text-align: center;
+}
+
+div.gallery {
+	background: white;
+	width: 70%;
 }
