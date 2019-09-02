@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+body {
+	background: silver;
+}
+
+.thumbnail {
+	width : 240px;
+}

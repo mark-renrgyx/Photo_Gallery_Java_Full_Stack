@@ -8,5 +8,12 @@
 </head>
 <body>
 <!-- Where they register new users, redirect to home if successful, reload if not -->
+
+<form action="Register" method="post">
+Email Address<input type="text" name="email" value="test"> <br />
+Password<input type="text" name="password"> <br />
+<input type="submit">
+</form>
+
 </body>
 </html>

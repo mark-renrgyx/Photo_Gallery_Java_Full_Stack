@@ -5,9 +5,11 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBUtility {
-
+	
 	public static ResultSet executeQuery(Connection con, String query) {
 		ResultSet rs = null;
 		try {
@@ -21,30 +23,49 @@ public class DBUtility {
 		}
 		return rs;
 	}
-
+	
+	public static List<String> getImages(ResultSet rs) {
+		List<String> imageLocations = new ArrayList<String>();
+		
+		try {
+			rs.getMetaData();
+			
+			while (rs.next()) {
+				imageLocations.add(rs.getString(2));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return imageLocations;
+	}
+	
 	public static String printImagesAsTable(ResultSet rs) {
 		String str = "";
 		ResultSetMetaData rsmd;
-
+		
 		try {
 			rsmd = rs.getMetaData();
 			str = str + "<table border=\"1\" width=\"100%\" cellspacing=\"1\" cellpadding=\"1\">\r\n" + "<thead>\r\n"
 					+ "<tr>";
 			str = str + "</tr>\r\n" + "</thead>\r\n" + "<tbody>";
 			str = str + "<tr>";
-			int count=0;
+			int count = 0;
 			while (rs.next()) {
-				str = str + ("<td width=\"30%\"><img style=\"display:block;\" width=\"100%\" src=\"" + rs.getString(2) + "\"></td>");
+				str = str + ("<td width=\"30%\"><img style=\"display:block;\" width=\"100%\" src=\"" + rs.getString(2)
+						+ "\"></td>");
 				count++;
-				if(count==3) {
-					count=0;
+				if (count == 3) {
+					count = 0;
 					str = str + "</tr><tr>";
 				}
 			}
 			str = str + "</tr>";
 			str = str + "\r\n" + "</tbody>\r\n" + "</table>";
 			return str;
-
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,11 +74,11 @@ public class DBUtility {
 		}
 		return "Nothing here!";
 	}
-
+	
 	public static String printEntireRSAsTable(ResultSet rs) {
 		String str = "";
 		ResultSetMetaData rsmd;
-
+		
 		try {
 			rsmd = rs.getMetaData();
 			str = str + "<table border=\"1\" width=\"100%\" cellspacing=\"1\" cellpadding=\"1\">\r\n" + "<thead>\r\n"
@@ -75,7 +96,7 @@ public class DBUtility {
 			}
 			str = str + "\r\n" + "</tbody>\r\n" + "</table>";
 			return str;
-
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -84,7 +105,7 @@ public class DBUtility {
 		}
 		return "Nothing here!";
 	}
-
+	
 	public static boolean executeUpdate(Connection con, String query) {
 		Statement state;
 		try {
@@ -101,7 +122,7 @@ public class DBUtility {
 			return false;
 		}
 	}
-
+	
 	public static void useDB(Connection con, String database) {
 		try {
 			con.setCatalog(database);
