@@ -65,14 +65,15 @@ public class FileUploadHandler extends HttpServlet {
 					if (!item.isFormField()) {
 						String name = new File(item.getName()).getName();
 						item.write(new File(UPLOAD_DIRECTORY + File.separator + name));
-						query = "INSERT INTO image (reference, category, user_id) VALUES ('" + UPLOAD_DIRECTORY + name
-								+ "', '" + name + "', '1');";
+						query = "INSERT INTO image (reference, category, user_id, filename) VALUES ('"
+								+ UPLOAD_DIRECTORY + File.separator + name + "', '" + name + "', '1', '" + name + "');";
 						DBUtility.executeUpdate(con, query);
 					}
 				}
 				
 				// File uploaded successfully
 				request.setAttribute("message", "File Uploaded Successfully");
+				System.out.println("File(s) created at " + UPLOAD_DIRECTORY);
 			} catch (Exception ex) {
 				request.setAttribute("message", "File Upload Failed due to " + ex);
 			}
