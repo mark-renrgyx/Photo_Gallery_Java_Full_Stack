@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
+<!-- NOTE deleted META-INT/context.xml -->
+
 <html>
 <head>
 <meta charset="UTF-8">
