@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBUtility {
 
@@ -22,22 +24,52 @@ public class DBUtility {
 		return rs;
 	}
 
-	public static String printImagesAsTable(ResultSet rs) {
-		String str = "";
-		ResultSetMetaData rsmd;
+	/**
+	 * Get the `src` for each <img> in a List
+	 * 
+	 * @return
+	 */
+
+	public static List<String> getImages(String user) {
+		List<String> imageLocations = new ArrayList<String>();
+
+		Connection con = DBConnection.getDBInstance();
+		DBUtility.useDB(con, "gallery");
+		String selectQuery;
+		selectQuery = "SELECT reference FROM image WHERE user_id LIKE '" + user + "';";
+		ResultSet rs;
+		rs = DBUtility.executeQuery(con, selectQuery);
 
 		try {
-			rsmd = rs.getMetaData();
+			rs.getMetaData();
+
+			while (rs.next()) {
+				imageLocations.add(rs.getString(1));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return imageLocations;
+	}
+
+	public static String printImagesAsTable(ResultSet rs) {
+		String str = "";
+
+		try {
 			str = str + "<table border=\"1\" width=\"100%\" cellspacing=\"1\" cellpadding=\"1\">\r\n" + "<thead>\r\n"
 					+ "<tr>";
 			str = str + "</tr>\r\n" + "</thead>\r\n" + "<tbody>";
 			str = str + "<tr>";
-			int count=0;
+			int count = 0;
 			while (rs.next()) {
-				str = str + ("<td width=\"30%\"><img style=\"display:block;\" width=\"100%\" src=\"" + rs.getString(2) + "\"></td>");
+				str = str + ("<td width=\"30%\"><img style=\"display:block;\" width=\"100%\" src=\"" + rs.getString(2)
+						+ "\"></td>");
 				count++;
-				if(count==3) {
-					count=0;
+				if (count == 3) {
+					count = 0;
 					str = str + "</tr><tr>";
 				}
 			}
