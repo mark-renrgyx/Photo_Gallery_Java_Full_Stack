@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Registration</title>
 </head>
 <body>
 <!-- Where they register new users, redirect to home if successful, reload if not -->

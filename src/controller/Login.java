@@ -61,7 +61,8 @@ public class Login extends HttpServlet {
 		
 		if (loginSucceeded) {
 			request.setAttribute("loggedIn", Boolean.valueOf(true));
-			request.getRequestDispatcher("home.jsp").forward(request, response);
+//			request.getRequestDispatcher("home.jsp").forward(request, response);
+			response.sendRedirect(request.getContextPath() + "/home.jsp");
 		} else {
 			PrintWriter writer = response.getWriter();
 			writer.append("<p class='error'>Login Failed</p>");
