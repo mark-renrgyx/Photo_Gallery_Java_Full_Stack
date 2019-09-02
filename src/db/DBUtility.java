@@ -1,5 +1,6 @@
 package db;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -24,14 +25,21 @@ public class DBUtility {
 		return rs;
 	}
 	
-	public static List<String> getImages(ResultSet rs) {
+	public static List<String> getImages() {
 		List<String> imageLocations = new ArrayList<String>();
+		
+		Connection con = DBConnection.getDBInstance();
+		DBUtility.useDB(con, "gallery");
+		String selectQuery;
+		selectQuery = "SELECT filename FROM image;";
+		ResultSet rs;
+		rs = DBUtility.executeQuery(con, selectQuery);
 		
 		try {
 			rs.getMetaData();
 			
 			while (rs.next()) {
-				imageLocations.add(rs.getString(2));
+				imageLocations.add("img" + File.separator + rs.getString(1));
 			}
 			
 		} catch (SQLException e) {

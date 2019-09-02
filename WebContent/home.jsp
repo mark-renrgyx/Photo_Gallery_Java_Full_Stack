@@ -23,13 +23,7 @@
 <a href="upload.jsp">Upload a file</a>
 
 	<%
-		Connection con = DBConnection.getDBInstance();
-		DBUtility.useDB(con, "gallery");
-		String query, selectQuery;
-		selectQuery = "SELECT * FROM image;";
-		ResultSet rs;
-		rs = DBUtility.executeQuery(con, selectQuery);
-		List<String> dbImages = DBUtility.getImages(rs);
+		List<String> dbImages = DBUtility.getImages();
 	%>
 
 <%
@@ -49,12 +43,11 @@
 	images.add("img/dummypic5.jpeg");
 	images.add("img/dummypic6.jpeg");
 	images.add("img/dummypic7a.jpeg"); */
-	
-	// The iterator we might actually use
-	Iterator<String> imageCursor = dbImages.iterator();
 %>
 
 <%
+	Iterator<String> imageCursor = dbImages.iterator();
+	
 	String taggedImages = "";
 	while (imageCursor.hasNext()) {
 		taggedImages += "<img class='thumbnail' src='";

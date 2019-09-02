@@ -60,6 +60,7 @@ public class Login extends HttpServlet {
 		boolean loginSucceeded = email.equals("test");
 		
 		if (loginSucceeded) {
+			request.setAttribute("loggedIn", Boolean.valueOf(true));
 			request.getRequestDispatcher("home.jsp").forward(request, response);
 		} else {
 			PrintWriter writer = response.getWriter();

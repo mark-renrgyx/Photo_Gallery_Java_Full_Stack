@@ -7,3 +7,8 @@ body {
 .thumbnail {
 	width : 240px;
 }
+
+p.error {
+	font-size: 150%;
+	color: red;
+}

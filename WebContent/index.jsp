@@ -15,6 +15,15 @@
 
 <!--  TODO: Should check if logged in, if so redirect to home.jsp -->
 
+<%
+	if (request.getAttribute("loggedIn") != null && request.getAttribute("loggedIn").equals(true)) {
+		request.getRequestDispatcher("home.jsp").forward(request, response);
+	}
+	else {
+		request.setAttribute("loggedIn", Boolean.valueOf(false));
+	}
+%>
+
 <p>You should log in!</p>
 <form action="Login" method="post">
 Email Address<input type="text" name="email" value="test"> <br />
