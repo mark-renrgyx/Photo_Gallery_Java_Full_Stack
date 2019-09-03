@@ -22,27 +22,6 @@ import db.DBUtility;
 public class Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-//    /**
-//     * @see HttpServlet#HttpServlet()
-//     */
-//    public Register() {
-//        super();
-//    }
-//
-//	/**
-//	 * @see Servlet#init(ServletConfig)
-//	 */
-//	public void init(ServletConfig config) throws ServletException {
-//	}
-//
-//	/**
-//	 * @see Servlet#destroy()
-//	 */
-//	public void destroy() {
-//	}
-
-	// TODO implement registration of new users
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -62,17 +41,19 @@ public class Register extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		//Connect and get parameters
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-
 		Connection con = DBConnection.getDBInstance();
 		DBUtility.useDB(con, "gallery");
 		String query;
 
+		//Find existing entries
 		query = "SELECT * FROM user WHERE email LIKE '" + email + "';";
 		ResultSet rs = DBUtility.executeQuery(con, query);
 
+		//Create new user if it doesn't have an entry
 		try {
 			if (!rs.next()) {
 				query = "INSERT INTO user (name, email, password) VALUES ('" + name + "','" + email + "', MD5('" + password + "'));";

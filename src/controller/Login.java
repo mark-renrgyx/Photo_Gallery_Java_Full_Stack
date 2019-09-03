@@ -22,25 +22,6 @@ import db.DBUtility;
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-//    /**
-//     * @see HttpServlet#HttpServlet()
-//     */
-//    public Login() {
-//        super();
-//    }
-//
-//	/**
-//	 * @see Servlet#init(ServletConfig)
-//	 */
-//	public void init(ServletConfig config) throws ServletException {
-//	}
-//
-//	/**
-//	 * @see Servlet#destroy()
-//	 */
-//	public void destroy() {
-//	}
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -59,19 +40,22 @@ public class Login extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
+		//Connect and get parameters
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-
 		Connection con = DBConnection.getDBInstance();
 		DBUtility.useDB(con, "gallery");
 		String query;
-
+		
+		//Find existing entries
 		query = "SELECT id, name FROM user WHERE email LIKE '" + email + "' AND password LIKE MD5('" + password + "');";
 		ResultSet rs = DBUtility.executeQuery(con, query);
-
+		
+		//Check if user exists
 		try {
 			if (rs.next()) {
+				//Set user session
 				request.getSession().setAttribute("loggedIn", Boolean.valueOf(true));
 				request.getSession().setAttribute("user", rs.getString(1));
 				request.getSession().setAttribute("name", rs.getString(2));
