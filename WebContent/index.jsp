@@ -14,14 +14,13 @@
 </head>
 
 <body>
-<!--  TODO: Should check if logged in, if so redirect to home.jsp -->
 
 <noscript><h1>You should enable Javascript to enjoy the full awesomeness of this page</h1></noscript>
 
 <h1>Welcome to the Web Gallery</h1>
 
 <%
-	if (request.getAttribute("loggedIn") != null && request.getAttribute("loggedIn").equals(true)) {
+	//Redirectif already logged in.
 		request.getRequestDispatcher("home.jsp").forward(request, response);
 	}
 	else {

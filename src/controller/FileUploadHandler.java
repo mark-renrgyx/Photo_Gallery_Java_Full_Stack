@@ -56,7 +56,7 @@ public class FileUploadHandler extends HttpServlet {
 		rs = DBUtility.executeQuery(con, selectQuery);
 		out.print(DBUtility.printEntireRSAsTable(rs));
 		
-		// process only if its multipart content
+		// Process if Multipart Content
 		if (ServletFileUpload.isMultipartContent(request)) {
 			try {
 				List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
@@ -65,23 +65,20 @@ public class FileUploadHandler extends HttpServlet {
 					if (!item.isFormField()) {
 						String name = new File(item.getName()).getName();
 						item.write(new File(UPLOAD_DIRECTORY + File.separator + name));
-						query = "INSERT INTO image (reference, category, user_id, filename) VALUES ('"
 								+ UPLOAD_DIRECTORY + File.separator + name + "', '" + name + "', '1', '" + name + "');";
+						//Save reference as image + date for uniqueness
 						DBUtility.executeUpdate(con, query);
 					}
 				}
 				
 				// File uploaded successfully
 				request.setAttribute("message", "File Uploaded Successfully");
-				System.out.println("File(s) created at " + UPLOAD_DIRECTORY);
-				// TODO remove
+			} catch (Exception e) {
 				System.out.println("TEST: " + request.getServletContext().getRealPath("img"));
-			} catch (Exception ex) {
-				request.setAttribute("message", "File Upload Failed due to " + ex);
 			}
 			
 		} else {
-			request.setAttribute("message", "Sorry this Servlet only handles file upload request");
+			request.setAttribute("message", "Sorry this Servlet is only for files");
 		}
 		
 		// request.getRequestDispatcher("/result.jsp").forward(request, response);

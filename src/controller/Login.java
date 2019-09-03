@@ -16,25 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-//    /**
-//     * @see HttpServlet#HttpServlet()
-//     */
-//    public Login() {
-//        super();
-//    }
-//
-//	/**
-//	 * @see Servlet#init(ServletConfig)
-//	 */
-//	public void init(ServletConfig config) throws ServletException {
-//	}
-//
-//	/**
-//	 * @see Servlet#destroy()
-//	 */
-//	public void destroy() {
-//	}
-	
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 * 
@@ -51,12 +33,14 @@ public class Login extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		//Connect and get parameters
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		
+
 		// Check if email and password combo is correct
 		
-		// TODO: Actual login
+		//Find existing entries
 		boolean loginSucceeded = email.equals("test");
 		
 		if (loginSucceeded) {
