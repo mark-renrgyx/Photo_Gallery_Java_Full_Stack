@@ -67,15 +67,15 @@ public class Login extends HttpServlet {
 		DBUtility.useDB(con, "gallery");
 		String query;
 
-		query = "SELECT * FROM user WHERE email LIKE '" + email + "' AND password LIKE MD5('" + password + "');";
+		query = "SELECT id, name FROM user WHERE email LIKE '" + email + "' AND password LIKE MD5('" + password + "');";
 		ResultSet rs = DBUtility.executeQuery(con, query);
-		// TODO: Actual login
 
 		try {
 			if (rs.next()) {
 				request.getSession().setAttribute("loggedIn", Boolean.valueOf(true));
 				request.getSession().setAttribute("user", rs.getString(1));
-				request.getRequestDispatcher("home.jsp").forward(request, response);
+				request.getSession().setAttribute("name", rs.getString(2));
+				response.sendRedirect("home.jsp");
 			} else {
 				PrintWriter writer = response.getWriter();
 				writer.append("<p class='error'>Login Failed</p>");

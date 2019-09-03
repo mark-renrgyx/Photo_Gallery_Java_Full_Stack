@@ -51,7 +51,8 @@ public class FileUploadHandler extends HttpServlet {
 		DBUtility.useDB(con, "gallery");
 		String query;
 		String user = (String) request.getSession().getAttribute("user");
-		String category = request.getParameter("category");
+		String category = (String) request.getParameter("category");
+		System.out.println(category);
 
 		// process only if its multipart content
 		if (ServletFileUpload.isMultipartContent(request)) {
@@ -66,7 +67,6 @@ public class FileUploadHandler extends HttpServlet {
 
 						String name = new File(item.getName()).getName();
 						String fullpath = UPLOAD_DIRECTORY + File.separator + fileformat.format(date) + name;
-						System.out.println(fullpath);
 						item.write(new File(fullpath));
 
 						query = "INSERT INTO image (user_id, reference, filename, category, date) VALUES ('" + user
@@ -79,8 +79,6 @@ public class FileUploadHandler extends HttpServlet {
 				// File uploaded successfully
 				request.setAttribute("message", "File Uploaded Successfully");
 				System.out.println("File(s) created at " + UPLOAD_DIRECTORY);
-				// TODO remove
-				System.out.println("TEST: " + request.getServletContext().getRealPath("img"));
 			} catch (Exception ex) {
 				request.setAttribute("message", "File Upload Failed due to " + ex);
 			}
@@ -89,6 +87,6 @@ public class FileUploadHandler extends HttpServlet {
 			request.setAttribute("message", "Sorry this Servlet only handles file upload request");
 		}
 
-		request.getRequestDispatcher("/home.jsp").forward(request, response);
+		response.sendRedirect("home.jsp");
 	}
 }

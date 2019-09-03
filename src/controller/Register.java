@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -62,8 +61,8 @@ public class Register extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO the actual registration
 
+		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
@@ -76,9 +75,9 @@ public class Register extends HttpServlet {
 
 		try {
 			if (!rs.next()) {
-				query = "INSERT INTO user (email, password) VALUES ('" + email + "', MD5('" + password + "'));";
+				query = "INSERT INTO user (name, email, password) VALUES ('" + name + "','" + email + "', MD5('" + password + "'));";
 				DBUtility.executeUpdate(con, query);
-				request.getRequestDispatcher("home.jsp").forward(request, response);
+				response.sendRedirect("index.jsp");
 			} else {
 				PrintWriter out = response.getWriter();
 				out.append("<p class='error' style='color:red;'>Registration Failed. User Already Exists.</p>");

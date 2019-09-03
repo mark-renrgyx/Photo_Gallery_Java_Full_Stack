@@ -41,7 +41,7 @@ public class Logout extends HttpServlet {
 		// Check if email and password combo is correct
 		
 			request.getSession().invalidate();
-			request.getRequestDispatcher("index.jsp").forward(request, response);
+			response.sendRedirect("index.jsp");
 		
 	}
 
