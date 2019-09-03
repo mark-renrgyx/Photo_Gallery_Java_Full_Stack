@@ -19,7 +19,7 @@
 
 <%
 	if (request.getSession().getAttribute("loggedIn") != null && request.getSession().getAttribute("loggedIn").equals(true)) {
-		request.getRequestDispatcher("home.jsp").forward(request, response);
+		response.sendRedirect("home.jsp");
 	}
 	else {
 		request.getSession().setAttribute("loggedIn", Boolean.valueOf(false));

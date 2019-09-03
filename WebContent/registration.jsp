@@ -10,7 +10,8 @@
 <!-- Where they register new users, redirect to home if successful, reload if not -->
 
 <form action="Register" method="post">
-Email Address<input type="text" name="email"> <br />
+Name<input type="text" name="name"> <br/>
+Email Address<input type="text" name="email"> <br/>
 Password<input type="text" name="password"> <br />
 <input type="submit">
 </form>
