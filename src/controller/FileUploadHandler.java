@@ -47,6 +47,7 @@ public class FileUploadHandler extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		//Connect and get parameters
 		Connection con = DBConnection.getDBInstance();
 		DBUtility.useDB(con, "gallery");
 		String query;
@@ -54,7 +55,7 @@ public class FileUploadHandler extends HttpServlet {
 		String category = (String) request.getParameter("category");
 		System.out.println(category);
 
-		// process only if its multipart content
+		// Process if Multipart Content
 		if (ServletFileUpload.isMultipartContent(request)) {
 			try {
 				List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
@@ -67,8 +68,10 @@ public class FileUploadHandler extends HttpServlet {
 
 						String name = new File(item.getName()).getName();
 						String fullpath = UPLOAD_DIRECTORY + File.separator + fileformat.format(date) + name;
+						//Create file as image + date for uniqueness
 						item.write(new File(fullpath));
 
+						//Save reference as image + date for uniqueness
 						query = "INSERT INTO image (user_id, reference, filename, category, date) VALUES ('" + user
 								+ "', '" + fullpath + "', '" + name + "', '" + category + "', '"
 								+ sqlformat.format(date) + "');";
@@ -78,13 +81,12 @@ public class FileUploadHandler extends HttpServlet {
 
 				// File uploaded successfully
 				request.setAttribute("message", "File Uploaded Successfully");
-				System.out.println("File(s) created at " + UPLOAD_DIRECTORY);
-			} catch (Exception ex) {
-				request.setAttribute("message", "File Upload Failed due to " + ex);
+			} catch (Exception e) {
+				request.setAttribute("message", "File Upload Failed due to " + e);
 			}
 
 		} else {
-			request.setAttribute("message", "Sorry this Servlet only handles file upload request");
+			request.setAttribute("message", "Sorry this Servlet is only for files");
 		}
 
 		response.sendRedirect("home.jsp");
