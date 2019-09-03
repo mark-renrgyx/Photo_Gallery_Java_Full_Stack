@@ -12,8 +12,18 @@ https://drive.google.com/drive/u/0/folders/1rWj1To9joq7GnTEcjiYjaPWle6H1gMKB
 2. (apache) commons-fileupload-1.4-sources.jar
 
 ## Configuration
-Modify the DBConstants.java file for your system
+Create the DBConstants.java file for your system:
 
     src/db/DBConstants.java
    
-   
+The file should contain this, modified for your system:
+
+    package db;
+
+	public class DBConstants {
+	
+	public static String url = "jdbc:mysql://localhost:3306/?serverTimezone=EST5EDT";
+	public static String username = "root";
+	public static String password = "root";
+	public static String uploadDirectory = "C:/img/"; // or Mac: "/Users/.../img";
+}
