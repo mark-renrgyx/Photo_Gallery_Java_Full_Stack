@@ -20,9 +20,6 @@
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 
-<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
-
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -74,7 +71,6 @@
 			taggedImages += imageCursor.next();
 			taggedImages += "'></div> \n";
 		}
-		// <div class='little_handle ui-resizable-se ui-resizable-handle'></div>
 	%>
 
 	<div class="gallery">

@@ -14,13 +14,11 @@
 </head>
 
 <body>
-	<!-- Check for logon, if so, redirect, if not this is logon page. -->
-	
+<!--  TODO: Should check if logged in, if so redirect to home.jsp -->
+
 <noscript><h1>You should enable Javascript to enjoy the full awesomeness of this page</h1></noscript>
 
 <h1>Welcome to the Web Gallery</h1>
-
-<!--  TODO: Should check if logged in, if so redirect to home.jsp -->
 
 <%
 	if (request.getAttribute("loggedIn") != null && request.getAttribute("loggedIn").equals(true)) {
