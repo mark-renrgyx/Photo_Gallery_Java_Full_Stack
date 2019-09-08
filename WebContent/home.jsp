@@ -85,7 +85,8 @@
 <script>
   $( function() {
     $( ".resizable" ).resizable({
-        
+    	autoHide: true,
+    	aspectRatio: true
     });
   } );
 </script>
