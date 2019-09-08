@@ -2,9 +2,9 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -46,45 +46,49 @@ public class FileUploadHandler extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		PrintWriter out = response.getWriter();
-		
+		// Connect and get parameters
 		Connection con = DBConnection.getDBInstance();
 		DBUtility.useDB(con, "gallery");
-		String query, selectQuery;
-		selectQuery = "SELECT * FROM image;";
-		ResultSet rs;
-		rs = DBUtility.executeQuery(con, selectQuery);
-		out.print(DBUtility.printEntireRSAsTable(rs));
+		String query;
+		String user = (String) request.getSession().getAttribute("user");
+		String category = (String) request.getParameter("category");
+		System.out.println("CATEGORY: " + category);
 		
-		// process only if its multipart content
+		// Process if Multipart Content
 		if (ServletFileUpload.isMultipartContent(request)) {
 			try {
 				List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
 				
 				for (FileItem item : multiparts) {
 					if (!item.isFormField()) {
+						Date date = new Date();
+						SimpleDateFormat sqlformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						SimpleDateFormat fileformat = new SimpleDateFormat("yyyyMMddHHmmss");
+						
 						String name = new File(item.getName()).getName();
-						item.write(new File(UPLOAD_DIRECTORY + File.separator + name));
-						query = "INSERT INTO image (reference, category, user_id, filename) VALUES ('"
-								+ UPLOAD_DIRECTORY + File.separator + name + "', '" + name + "', '1', '" + name + "');";
+						String filename = fileformat.format(date) + name;
+						String fullpath = UPLOAD_DIRECTORY + File.separator + filename;
+						// Create file as image + date for uniqueness
+						item.write(new File(fullpath));
+						
+						// Save reference as image + date for uniqueness
+						query = "INSERT INTO image (user, reference, filename, category, date) VALUES ('" + user
+								+ "', '" + fullpath + "', '" + filename + "', '" + category + "', '"
+								+ sqlformat.format(date) + "');";
 						DBUtility.executeUpdate(con, query);
 					}
 				}
 				
 				// File uploaded successfully
 				request.setAttribute("message", "File Uploaded Successfully");
-				System.out.println("File(s) created at " + UPLOAD_DIRECTORY);
-				// TODO remove
-				System.out.println("TEST: " + request.getServletContext().getRealPath("img"));
-			} catch (Exception ex) {
-				request.setAttribute("message", "File Upload Failed due to " + ex);
+			} catch (Exception e) {
+				request.setAttribute("message", "File Upload Failed due to " + e.getMessage());
 			}
 			
 		} else {
-			request.setAttribute("message", "Sorry this Servlet only handles file upload request");
+			request.setAttribute("message", "Sorry this Servlet is only for files");
 		}
 		
-		// request.getRequestDispatcher("/result.jsp").forward(request, response);
-		request.getRequestDispatcher("/home.jsp").forward(request, response);
+		response.sendRedirect("home.jsp");
 	}
 }

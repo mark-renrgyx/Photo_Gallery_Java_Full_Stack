@@ -16,7 +16,7 @@ public class DBUtility {
 			Statement state = con.createStatement();
 			rs = state.executeQuery(query);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.err.println("FAILED QUERY: " + query);
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -29,13 +29,13 @@ public class DBUtility {
 	 * 
 	 * @return
 	 */
-	public static List<String> getImages() {
+	public static List<String> getImages(String user) {
 		List<String> imageLocations = new ArrayList<String>();
 		
 		Connection con = DBConnection.getDBInstance();
 		DBUtility.useDB(con, "gallery");
 		String selectQuery;
-		selectQuery = "SELECT filename FROM image;";
+		selectQuery = "SELECT filename FROM image WHERE user LIKE " + user + ";";
 		ResultSet rs;
 		rs = DBUtility.executeQuery(con, selectQuery);
 		
