@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
 <%@page import="java.sql.ResultSet"%>
 <%@page import="db.DBUtility"%>
 <%@page import="db.DBConnection"%>
@@ -17,6 +17,14 @@
 <style><%@include file="/css/site_styles.css" %></style>
 
 <link href='http://fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <title>Gallery</title>
 </head>
@@ -57,15 +65,16 @@
 	
 	<%
 		List<String> dbImages = DBUtility.getImages();
-	
+		
 		Iterator<String> imageCursor = dbImages.iterator();
 		
 		String taggedImages = "";
 		while (imageCursor.hasNext()) {
-			taggedImages += "<div class='thumbnail_container'><img class='thumbnail' src='";
+			taggedImages += "<div class='thumbnail_container resizable'><img class='thumbnail' src='";
 			taggedImages += imageCursor.next();
 			taggedImages += "'></div> \n";
 		}
+		// <div class='little_handle ui-resizable-se ui-resizable-handle'></div>
 	%>
 
 	<div class="gallery">
@@ -73,5 +82,12 @@
 	</div>
 </div>
 
+<script>
+  $( function() {
+    $( ".resizable" ).resizable({
+        
+    });
+  } );
+</script>
 </body>
 </html>

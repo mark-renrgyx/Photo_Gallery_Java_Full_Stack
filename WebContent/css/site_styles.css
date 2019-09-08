@@ -67,23 +67,29 @@ td > p {
 	height: 250px;
 	display: inline-block;
 }
-
+/* 
 .thumbnail_container:hover {
 	padding: 0px;
 }
-
+ */
 .thumbnail {
 	max-width: 95%;
 	max-height: 95%;
-	max-width: 240px;
-	max-height: 240px;
+/* 	max-width: 240px;
+	max-height: 240px; */
 	display: inline;
 }
 
-.thumbnail:hover {
+/*.thumbnail:hover {
 	max-width: 100%;
 	max-height: 100%;
 	max-width: 250px;
 	max-height: 250px;
 	display: inline;
+}*/
+
+.little_handle {
+	width: 5px;
+	height: 5px;
+	border: 1px solid black;
 }
