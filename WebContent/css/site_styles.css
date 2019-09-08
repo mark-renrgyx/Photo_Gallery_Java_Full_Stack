@@ -12,6 +12,13 @@ h1 {
     margin-block-end: .05em;
 }
 
+h2 {
+	color: #1A237E; /* indigo 900 */
+	font: 4em 'Great Vibes', Helvetica, sans-serif;
+	margin-block-start: 0em;
+    margin-block-end: .05em;
+}
+
 p {
 	color: #1A237E /* indigo 900 */
 }

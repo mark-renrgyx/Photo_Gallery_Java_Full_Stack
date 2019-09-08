@@ -27,14 +27,13 @@
 <body>
 
 	<div class="gallery_container">
-	<h1>Welcome <%=request.getSession().getAttribute("name") %>! This is your super-awesome gallery</h1>
-			Welcome
-			<%=request.getSession().getAttribute("name")%>! This is your
-			super-awesome gallery
-		</h1>
+	<h1>Welcome <%=request.getSession().getAttribute("name") %>!</h1>
+	<h2>This is your super-awesome gallery</h2>
 		<div id="controls">
 			<div class="option">
-				<a href="upload.jsp">Upload a file</a>
+				<form action="upload.jsp">
+					<input type=submit value="Upload a file">
+				</form>
 			</div>
 			<div class="option">
 				<form action="Search">
@@ -63,16 +62,17 @@
 		</div>
 
 		<%
-		//TODO move to seperate class to implement different sorting and searching methods
-		List<String> dbImages = DBUtility.getImages((String) request.getSession().getAttribute("user"));
-		
+			//TODO move to seperate class to implement different sorting and searching methods
+			String user = (String) request.getSession().getAttribute("user"); // user ID
+			List<String> dbImages = DBUtility.getImages(user);
+			
 			Iterator<String> imageCursor = dbImages.iterator();
-
+			
 			String taggedImages = "";
 			while (imageCursor.hasNext()) {
-			taggedImages += "<div class='thumbnail_container resizable'><img class='thumbnail' src='";
+				taggedImages += "<div class='thumbnail_container resizable'><img class='thumbnail' src='";
 				taggedImages += imageCursor.next();
-			taggedImages += "'></div> \n";
+				taggedImages += "'></div> \n";
 			}
 		%>
 

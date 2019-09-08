@@ -20,8 +20,11 @@
 <h1>Welcome to the Web Gallery</h1>
 
 <%
-	//Redirectif already logged in.
-		request.getRequestDispatcher("home.jsp").forward(request, response);
+	//Redirect if already logged in.
+	if (request.getSession().getAttribute("loggedIn") != null && request.getSession().getAttribute("loggedIn").equals(true)) {
+		response.sendRedirect("home.jsp");
+
+		//request.getRequestDispatcher("home.jsp").forward(request, response);
 	}
 	else {
 		request.setAttribute("loggedIn", Boolean.valueOf(false));
