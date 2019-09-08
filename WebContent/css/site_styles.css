@@ -71,11 +71,11 @@ td > p {
 .thumbnail_container {
 	height: 256px;
 	display: inline-block;
-	border: 1px solid white; /* SET THIS TO BACKGROUND COLOR */
 	max-width: 99%;
-	padding: 1px;
+	padding: 2px;
 }
 
 .thumbnail_container:hover {
+	padding: 1px;
 	border: 1px solid #9FA8DA; /* indigo 200 */
 }
