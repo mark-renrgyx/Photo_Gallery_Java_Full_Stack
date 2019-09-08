@@ -6,7 +6,6 @@ body {
 
 h1 {
 	color: #1A237E; /* indigo 900 */
-	/*font: 400 130px/0.8 'Great Vibes', Helvetica, sans-serif; */
 	font: 6em 'Great Vibes', Helvetica, sans-serif;
 	/*text-shadow: 4px 4px 3px rgba(0,0,0,0.1); */
 	margin-block-start: 0em;
@@ -34,6 +33,7 @@ div.gallery_container > div {
 
 div.gallery {
 	background: white;
+	padding-bottom: 256px;
 }
 
 div#controls {
@@ -62,31 +62,23 @@ td > p {
 	height: 1.2em;
 }
 
-.thumbnail_container {
-	width: 250px;
-	height: 250px;
-	display: inline-block;
-}
-/* 
-.thumbnail_container:hover {
-	padding: 0px;
-}
- */
 .thumbnail {
-	max-width: 95%;
-	max-height: 95%;
-/* 	max-width: 240px;
-	max-height: 240px; */
+	max-width: 100%;
+	max-height: 100%;
 	display: inline;
 }
 
-/*.thumbnail:hover {
-	max-width: 100%;
-	max-height: 100%;
-	max-width: 250px;
-	max-height: 250px;
-	display: inline;
-}*/
+.thumbnail_container {
+	height: 256px;
+	display: inline-block;
+	border: 1px solid white; /* SET THIS TO BACKGROUND COLOR */
+	max-width: 99%;
+	padding: 1px;
+}
+
+.thumbnail_container:hover {
+	border: 1px solid #9FA8DA; /* indigo 200 */
+}
 
 .little_handle {
 	width: 5px;
