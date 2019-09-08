@@ -91,47 +91,4 @@ public class FileUploadHandler extends HttpServlet {
 		
 		response.sendRedirect("home.jsp");
 	}
-	
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-//			throws ServletException, IOException {
-//		
-//		PrintWriter out = response.getWriter();
-//		
-//		Connection con = DBConnection.getDBInstance();
-//		DBUtility.useDB(con, "gallery");
-//		String query, selectQuery;
-//		selectQuery = "SELECT * FROM image;";
-//		ResultSet rs;
-//		rs = DBUtility.executeQuery(con, selectQuery);
-//		out.print(DBUtility.printEntireRSAsTable(rs));
-//		
-//		// Process if Multipart Content
-//		if (ServletFileUpload.isMultipartContent(request)) {
-//			try {
-//				List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-//				
-//				for (FileItem item : multiparts) {
-//					if (!item.isFormField()) {
-//						String name = new File(item.getName()).getName();
-//						item.write(new File(UPLOAD_DIRECTORY + File.separator + name));
-//						// + UPLOAD_DIRECTORY + File.separator + name + "', '" + name + "', '1', '" + name + "');";
-//						// Save reference as image + date for uniqueness
-//						DBUtility.executeUpdate(con, selectQuery); // was just query instead of selectQuery
-//					}
-//				}
-//				
-//				// File uploaded successfully
-//				request.setAttribute("message", "File Uploaded Successfully");
-//			} catch (Exception e) {
-//				System.out.println("TEST: " + request.getServletContext().getRealPath("img"));
-//			}
-//			
-//		} else {
-//			request.setAttribute("message", "Sorry this Servlet is only for files");
-//		}
-//		
-//		// request.getRequestDispatcher("/result.jsp").forward(request, response);
-//		// request.getRequestDispatcher("/home.jsp").forward(request, response);
-//		response.sendRedirect(request.getContextPath() + "/home.jsp");
-//	}
 }

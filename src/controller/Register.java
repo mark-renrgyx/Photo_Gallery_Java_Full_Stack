@@ -36,16 +36,6 @@ public class Register extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-//			throws ServletException, IOException {
-//		// TODO the actual registration
-//		
-//		// Now redirect
-//		request.getRequestDispatcher("home.jsp").forward(request, response);
-//		//Find existing entries
-//		//Create new user if it doesn't have an entry
-//	}
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
@@ -78,6 +68,5 @@ public class Register extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 }

@@ -68,26 +68,4 @@ public class Login extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-//			throws ServletException, IOException {
-//
-//		//Connect and get parameters
-//		String email = request.getParameter("email");
-//		String password = request.getParameter("password");
-//
-//		// Check if email and password combo is correct
-//		
-//		//Find existing entries
-//		boolean loginSucceeded = email.equals("test");
-//		
-//		if (loginSucceeded) {
-//			request.setAttribute("loggedIn", Boolean.valueOf(true));
-////			request.getRequestDispatcher("home.jsp").forward(request, response);
-//			response.sendRedirect(request.getContextPath() + "/home.jsp");
-//		} else {
-//			PrintWriter writer = response.getWriter();
-//			writer.append("<p class='error'>Login Failed</p>");
-//			request.getRequestDispatcher("index.jsp").include(request, response);
-//		}
-//	}
 }
