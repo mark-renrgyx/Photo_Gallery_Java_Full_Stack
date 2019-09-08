@@ -2,6 +2,8 @@
 # Created by https://www.gitignore.io/api/java,eclipse
 # Edit at https://www.gitignore.io/?templates=java,eclipse
 
+DBConstants.java
+
 ### Eclipse ###
 .metadata
 bin/
@@ -21,26 +23,11 @@ local.properties
 # Locally stored "Eclipse launch configurations"
 *.launch
 
-# PyDev specific (Python IDE for Eclipse)
-*.pydevproject
-
-# CDT-specific (C/C++ Development Tooling)
-.cproject
-
-# CDT- autotools
-.autotools
-
 # Java annotation processor (APT)
 .factorypath
 
-# PDT-specific (PHP Development Tools)
-.buildpath
-
 # sbteclipse plugin
 .target
-
-# Tern plugin
-.tern-project
 
 # TeXlipse plugin
 .texlipse
@@ -53,11 +40,6 @@ local.properties
 
 # Annotation Processing
 .apt_generated/
-
-# Scala IDE specific (Scala & Java development for Eclipse)
-.cache-main
-.scala_dependencies
-.worksheet
 
 ### Eclipse Patch ###
 # Eclipse Core
@@ -78,12 +60,6 @@ local.properties
 # Log file
 *.log
 
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
 # Package Files #
 *.jar
 *.war
@@ -97,5 +73,6 @@ local.properties
 hs_err_pid*
 
 # End of https://www.gitignore.io/api/java,eclipse
+/build/
 src/db/DBConstants.java
 /WebContent/img

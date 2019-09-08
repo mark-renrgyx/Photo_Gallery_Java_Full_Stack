@@ -21,10 +21,9 @@ import db.DBUtility;
 @WebServlet("/Login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 * 
 	 *      This should never be accessed (only POST)
 	 */
@@ -33,29 +32,28 @@ public class Login extends HttpServlet {
 		response.getWriter().append("How did you get here?");
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
-
+	
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		//Connect and get parameters
+		// Connect and get parameters
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		Connection con = DBConnection.getDBInstance();
 		DBUtility.useDB(con, "gallery");
 		String query;
 		
-		//Find existing entries
+		// Find existing entries
 		query = "SELECT id, name FROM user WHERE email LIKE '" + email + "' AND password LIKE MD5('" + password + "');";
 		ResultSet rs = DBUtility.executeQuery(con, query);
 		
-		//Check if user exists
+		// Check if user exists
 		try {
 			if (rs.next()) {
-				//Set user session
+				// Set user session
 				request.getSession().setAttribute("loggedIn", Boolean.valueOf(true));
 				request.getSession().setAttribute("user", rs.getString(1));
 				request.getSession().setAttribute("name", rs.getString(2));

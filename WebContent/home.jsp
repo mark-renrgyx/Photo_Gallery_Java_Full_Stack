@@ -13,21 +13,27 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="site_styles.css" />
+<style><%@include file="/css/site_styles.css" %></style>
+
+<link href='http://fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <title>Gallery</title>
 </head>
 <body>
 
 	<div class="gallery_container">
-		<h1>
-			Welcome
-			<%=request.getSession().getAttribute("name")%>! This is your
-			super-awesome gallery
-		</h1>
+	<h1>Welcome <%=request.getSession().getAttribute("name") %>!</h1>
+	<h2>This is your super-awesome gallery</h2>
 		<div id="controls">
 			<div class="option">
-				<a href="upload.jsp">Upload a file</a>
+				<form action="upload.jsp">
+					<input type=submit value="Upload a file">
+				</form>
 			</div>
 			<div class="option">
 				<form action="Search">
@@ -57,15 +63,16 @@
 
 		<%
 			//TODO move to seperate class to implement different sorting and searching methods
-			List<String> dbImages = DBUtility.getImages((String) request.getSession().getAttribute("user"));
-
+			String user = (String) request.getSession().getAttribute("user"); // user ID
+			List<String> dbImages = DBUtility.getImages(user);
+			
 			Iterator<String> imageCursor = dbImages.iterator();
-
+			
 			String taggedImages = "";
 			while (imageCursor.hasNext()) {
-				taggedImages += "<img class='thumbnail' src='";
+				taggedImages += "<div class='thumbnail_container resizable'><img class='thumbnail' src='";
 				taggedImages += imageCursor.next();
-				taggedImages += "'> \n";
+				taggedImages += "'></div> \n";
 			}
 		%>
 
@@ -74,5 +81,13 @@
 		</div>
 	</div>
 
+<script>
+  $( function() {
+    $( ".resizable" ).resizable({
+    	autoHide: true,
+    	aspectRatio: true
+    });
+  } );
+</script>
 </body>
 </html>

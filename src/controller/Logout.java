@@ -14,11 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/Logout")
 public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.getWriter().append("How did you get here?");
 		request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -30,10 +30,8 @@ public class Logout extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-			//Invalidate the session to require new login
-			request.getSession().invalidate();
-			response.sendRedirect("index.jsp");
-		
+		// Invalidate the session to require new login
+		request.getSession().invalidate();
+		response.sendRedirect("index.jsp");
 	}
-
 }

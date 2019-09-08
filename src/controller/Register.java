@@ -21,10 +21,9 @@ import db.DBUtility;
 @WebServlet("/Register")
 public class Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 * 
 	 *      This should never be accessed (only POST)
 	 */
@@ -33,30 +32,30 @@ public class Register extends HttpServlet {
 		response.getWriter().append("How did you get here?");
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
-
+	
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		//Connect and get parameters
+		
+		// Connect and get parameters
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		Connection con = DBConnection.getDBInstance();
 		DBUtility.useDB(con, "gallery");
 		String query;
-
-		//Find existing entries
+		
+		// Find existing entries
 		query = "SELECT * FROM user WHERE email LIKE '" + email + "';";
 		ResultSet rs = DBUtility.executeQuery(con, query);
-
-		//Create new user if it doesn't have an entry
+		
+		// Create new user if it doesn't have an entry
 		try {
 			if (!rs.next()) {
-				query = "INSERT INTO user (name, email, password) VALUES ('" + name + "','" + email + "', MD5('" + password + "'));";
+				query = "INSERT INTO user (name, email, password) VALUES ('" + name + "','" + email + "', MD5('"
+						+ password + "'));";
 				DBUtility.executeUpdate(con, query);
 				response.sendRedirect("index.jsp");
 			} else {
@@ -64,11 +63,10 @@ public class Register extends HttpServlet {
 				out.append("<p class='error' style='color:red;'>Registration Failed. User Already Exists.</p>");
 				request.getRequestDispatcher("registration.jsp").include(request, response);
 			}
-
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 }

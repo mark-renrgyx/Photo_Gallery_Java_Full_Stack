@@ -9,44 +9,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBUtility {
-
+	
 	public static ResultSet executeQuery(Connection con, String query) {
 		ResultSet rs = null;
 		try {
 			Statement state = con.createStatement();
 			rs = state.executeQuery(query);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.err.println("FAILED QUERY: " + query);
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return rs;
 	}
-
+	
 	/**
 	 * Get the `src` for each <img> in a List
 	 * 
 	 * @return
 	 */
-
 	public static List<String> getImages(String user) {
 		List<String> imageLocations = new ArrayList<String>();
-
+		
 		Connection con = DBConnection.getDBInstance();
 		DBUtility.useDB(con, "gallery");
 		String selectQuery;
-		selectQuery = "SELECT reference FROM image WHERE user_id LIKE '" + user + "';";
+		selectQuery = "SELECT filename FROM image WHERE user LIKE " + user + ";";
 		ResultSet rs;
 		rs = DBUtility.executeQuery(con, selectQuery);
-
+		
 		try {
 			rs.getMetaData();
-
+			
 			while (rs.next()) {
-				imageLocations.add(rs.getString(1));
+				imageLocations.add("img" + "/" + rs.getString(1));
 			}
-
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -54,11 +53,13 @@ public class DBUtility {
 		}
 		return imageLocations;
 	}
-
+	
 	public static String printImagesAsTable(ResultSet rs) {
 		String str = "";
-
+		ResultSetMetaData rsmd;
+		
 		try {
+			rsmd = rs.getMetaData();
 			str = str + "<table border=\"1\" width=\"100%\" cellspacing=\"1\" cellpadding=\"1\">\r\n" + "<thead>\r\n"
 					+ "<tr>";
 			str = str + "</tr>\r\n" + "</thead>\r\n" + "<tbody>";
@@ -76,7 +77,7 @@ public class DBUtility {
 			str = str + "</tr>";
 			str = str + "\r\n" + "</tbody>\r\n" + "</table>";
 			return str;
-
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,11 +86,11 @@ public class DBUtility {
 		}
 		return "Nothing here!";
 	}
-
+	
 	public static String printEntireRSAsTable(ResultSet rs) {
 		String str = "";
 		ResultSetMetaData rsmd;
-
+		
 		try {
 			rsmd = rs.getMetaData();
 			str = str + "<table border=\"1\" width=\"100%\" cellspacing=\"1\" cellpadding=\"1\">\r\n" + "<thead>\r\n"
@@ -107,7 +108,7 @@ public class DBUtility {
 			}
 			str = str + "\r\n" + "</tbody>\r\n" + "</table>";
 			return str;
-
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -116,7 +117,7 @@ public class DBUtility {
 		}
 		return "Nothing here!";
 	}
-
+	
 	public static boolean executeUpdate(Connection con, String query) {
 		Statement state;
 		try {
@@ -133,7 +134,7 @@ public class DBUtility {
 			return false;
 		}
 	}
-
+	
 	public static void useDB(Connection con, String database) {
 		try {
 			con.setCatalog(database);
