@@ -14,7 +14,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="site_styles.css" />
+<style><%@include file="/css/site_styles.css" %></style>
+
+<link href='http://fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'>
 
 <title>Gallery</title>
 </head>
@@ -60,9 +62,9 @@
 		
 		String taggedImages = "";
 		while (imageCursor.hasNext()) {
-			taggedImages += "<img class='thumbnail' src='";
+			taggedImages += "<div class='thumbnail_container'><img class='thumbnail' src='";
 			taggedImages += imageCursor.next();
-			taggedImages += "'> \n";
+			taggedImages += "'></div> \n";
 		}
 	%>
 
