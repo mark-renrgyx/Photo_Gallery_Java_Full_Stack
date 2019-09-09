@@ -76,3 +76,4 @@ hs_err_pid*
 /build/
 src/db/DBConstants.java
 /WebContent/img
+hibernate.cfg.xml

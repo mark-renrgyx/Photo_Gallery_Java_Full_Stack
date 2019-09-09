@@ -23,7 +23,7 @@
 	//Redirect if already logged in.
 	if (request.getSession().getAttribute("loggedIn") != null && request.getSession().getAttribute("loggedIn").equals(true)) {
 		response.sendRedirect("home.jsp");
-
+		
 		//request.getRequestDispatcher("home.jsp").forward(request, response);
 	}
 	else {

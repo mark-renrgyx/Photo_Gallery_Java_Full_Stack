@@ -2,9 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import db.DBConnection;
-import db.DBUtility;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import db.HibernateConnection;
+import db.HibernateUtil;
+import entities.User;
 
 /**
  * Servlet implementation class Login
@@ -42,30 +44,29 @@ public class Login extends HttpServlet {
 		// Connect and get parameters
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		Connection con = DBConnection.getDBInstance();
-		DBUtility.useDB(con, "gallery");
-		String query;
+		String hashedPassword = HibernateUtil.sha256(password);
 		
-		// Find existing entries
-		query = "SELECT id, name FROM user WHERE email LIKE '" + email + "' AND password LIKE MD5('" + password + "');";
-		ResultSet rs = DBUtility.executeQuery(con, query);
+		Session session = HibernateConnection.getSession();
+		
+		// like SELECT *
+		String hql = "FROM User U WHERE U.email = '" + email + "' AND U.password = '" + hashedPassword + "'";
+		Query<User> query = session.createQuery(hql, User.class);
+		List<User> users = query.getResultList();
 		
 		// Check if user exists
-		try {
-			if (rs.next()) {
-				// Set user session
-				request.getSession().setAttribute("loggedIn", Boolean.valueOf(true));
-				request.getSession().setAttribute("user", rs.getString(1));
-				request.getSession().setAttribute("name", rs.getString(2));
-				response.sendRedirect("home.jsp");
-			} else {
-				PrintWriter writer = response.getWriter();
-				writer.append("<p class='error'>Login Failed</p>");
-				request.getRequestDispatcher("index.jsp").include(request, response);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		if (users.size() > 0) {
+			// Set user session
+			User theUser = users.get(0);
+			
+			request.getSession().setAttribute("loggedIn", Boolean.valueOf(true));
+			request.getSession().setAttribute("user", theUser.getId());
+			request.getSession().setAttribute("name", theUser.getName());
+			response.sendRedirect("home.jsp");
+		} else {
+			PrintWriter writer = response.getWriter();
+			writer.append("<p class='error'>Login Failed</p>");
+			request.getRequestDispatcher("index.jsp").include(request, response);
 		}
 	}
 }

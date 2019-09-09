@@ -8,6 +8,8 @@
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Iterator"%>
+<%@ page import ="entities.User" %>
+<%@ page import = "db.HibernateUtil" %>
 
 <!DOCTYPE html>
 <html>
@@ -63,8 +65,8 @@
 
 		<%
 			//TODO move to seperate class to implement different sorting and searching methods
-			String user = (String) request.getSession().getAttribute("user"); // user ID
-			List<String> dbImages = DBUtility.getImages(user);
+			Integer userId = (Integer) request.getSession().getAttribute("user"); // user ID
+			List<String> dbImages = HibernateUtil.getImages(userId);
 			
 			Iterator<String> imageCursor = dbImages.iterator();
 			
@@ -74,6 +76,7 @@
 				taggedImages += imageCursor.next();
 				taggedImages += "'></div> \n";
 			}
+			System.out.println(taggedImages);
 		%>
 
 		<div class="gallery">
