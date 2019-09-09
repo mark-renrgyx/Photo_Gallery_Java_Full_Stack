@@ -68,10 +68,10 @@ public class Register extends HttpServlet {
 			newUser.setPassword(hashedPassword);
 			
 			Integer result = (Integer) session.save(newUser);
-			// log in
-			request.getSession().setAttribute("loggedIn", Boolean.valueOf(true));
-			request.getSession().setAttribute("user", newUser.getId());
-			request.getSession().setAttribute("name", newUser.getName());
+//			// log in
+//			request.getSession().setAttribute("loggedIn", Boolean.valueOf(true));
+//			request.getSession().setAttribute("user", newUser.getId());
+//			request.getSession().setAttribute("name", newUser.getName());
 			
 			System.out.println("Result of adding new user: " + result); // TODO remove test
 			response.sendRedirect("index.jsp");

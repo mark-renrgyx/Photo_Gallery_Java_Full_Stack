@@ -11,7 +11,6 @@
 <body>
 
 <h2>Registration</h2>
-<!-- Where they register new users, redirect to home if successful, reload if not -->
 
 <form action="Register" method="post">
 Name<input type="text" name="name"> <br/>
