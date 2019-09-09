@@ -4,6 +4,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+/**
+ * Singleton enum
+ * 
+ * @author mark
+ *
+ */
 public enum HibernateConnection {
 	INSTANCE;
 	

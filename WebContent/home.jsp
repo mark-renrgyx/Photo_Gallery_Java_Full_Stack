@@ -2,8 +2,6 @@
 	pageEncoding="UTF-8"%>
 
 <%@page import="java.sql.ResultSet"%>
-<%@page import="db.DBUtility"%>
-<%@page import="db.DBConnection"%>
 <%@page import="java.sql.Connection"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
@@ -81,7 +79,7 @@ response.setDateHeader ("Expires", 0);
 				taggedImages += imageCursor.next();
 				taggedImages += "'></div> \n";
 			}
-			System.out.println(taggedImages);
+			//System.out.println(taggedImages); // TODO: remove
 		%>
 
 		<div class="gallery">

@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -96,7 +97,7 @@ public class FileUploadHandler extends HttpServlet {
 						session.getTransaction().commit();
 					}
 				}
-				
+				touchTxt();
 				// File uploaded successfully
 				request.setAttribute("message", "File Uploaded Successfully");
 			} catch (Exception e) {
@@ -110,6 +111,32 @@ public class FileUploadHandler extends HttpServlet {
 		}
 		
 		response.sendRedirect("home.jsp");
+	}
+	
+	private void touchTxt() {
+		File file = new File(DBConstants.uploadDirectory + File.separator + "touch.txt");
+		FileWriter fileWriter;
+		if (file.exists()) {
+//			String folder = file.getParent();
+//			String timeStamp = new Date().toString();
+//			File newFile = new File(folder + File.separator + "log-" + timeStamp + ".txt");
+//			file.renameTo(newFile);
+		
+		} else {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				System.err.println("Failed to create a log file");
+				e.printStackTrace();
+			}
+		}
+		try {
+			fileWriter = new FileWriter(file);
+			fileWriter.append('a');
+		} catch (IOException e) {
+			System.err.println("Failed to create writer");
+			e.printStackTrace();
+		}
 	}
 	
 //	/**
