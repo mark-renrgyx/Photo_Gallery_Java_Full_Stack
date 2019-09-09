@@ -11,12 +11,11 @@
 <body>
 
 <h2>Registration</h2>
-<!-- Where they register new users, redirect to home if successful, reload if not -->
 
 <form action="Register" method="post">
 Name<input type="text" name="name"> <br/>
 Email Address<input type="text" name="email"> <br/>
-Password<input type="text" name="password"> <br />
+Password<input type="password" name="password"> <br />
 <input type="submit">
 </form>
 

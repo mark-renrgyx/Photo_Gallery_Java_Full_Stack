@@ -2,9 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import db.DBConnection;
-import db.DBUtility;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import db.HibernateConnection;
+import db.HibernateUtil;
+import entities.User;
 
 /**
  * Servlet implementation class Register
@@ -38,35 +40,41 @@ public class Register extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// Log the user out if they were logged in before hitting Register
+		request.getSession().invalidate();
 		
 		// Connect and get parameters
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		Connection con = DBConnection.getDBInstance();
-		DBUtility.useDB(con, "gallery");
-		String query;
+		String hashedPassword = HibernateUtil.sha256(password);
+		System.out.println("hashed: " + hashedPassword); // TODO: remove
 		
-		// Find existing entries
-		query = "SELECT * FROM user WHERE email LIKE '" + email + "';";
-		ResultSet rs = DBUtility.executeQuery(con, query);
+		Session session = HibernateConnection.getSession();
 		
-		// Create new user if it doesn't have an entry
-		try {
-			if (!rs.next()) {
-				query = "INSERT INTO user (name, email, password) VALUES ('" + name + "','" + email + "', MD5('"
-						+ password + "'));";
-				DBUtility.executeUpdate(con, query);
-				response.sendRedirect("index.jsp");
-			} else {
-				PrintWriter out = response.getWriter();
-				out.append("<p class='error' style='color:red;'>Registration Failed. User Already Exists.</p>");
-				request.getRequestDispatcher("registration.jsp").include(request, response);
-			}
+//		String hql = "SELECT U.id FROM User U WHERE U.email = '" + email + "'";
+		String hql = "FROM User U WHERE U.email = '" + email + "'";
+		Query<User> query = session.createQuery(hql, User.class);
+		List<User> users = query.getResultList();
+		
+		if (users.size() > 0) {
+			PrintWriter out = response.getWriter();
+			out.append("<p class='error' style='color:red;'>Registration Failed. User Already Exists.</p>");
+			request.getRequestDispatcher("registration.jsp").include(request, response);
+		} else {
+			User newUser = new User();
+			newUser.setEmail(email);
+			newUser.setName(name);
+			newUser.setPassword(hashedPassword);
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Integer result = (Integer) session.save(newUser);
+//			// log in
+//			request.getSession().setAttribute("loggedIn", Boolean.valueOf(true));
+//			request.getSession().setAttribute("user", newUser.getId());
+//			request.getSession().setAttribute("name", newUser.getName());
+			
+			System.out.println("Result of adding new user: " + result); // TODO remove test
+			response.sendRedirect("index.jsp");
 		}
 	}
 }
