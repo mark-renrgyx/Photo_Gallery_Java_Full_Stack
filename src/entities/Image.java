@@ -16,7 +16,7 @@ public class Image {
 	private String reference;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_id_fk", referencedColumnName = "id")
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
 	
 	@Column(name = "filename", nullable = false, length = 120)
