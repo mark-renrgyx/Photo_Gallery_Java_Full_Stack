@@ -1,6 +1,6 @@
 package db;
 
-// Move this file to `src/db` and update path
+// Move this file to `src/db` and update uploadDirectory for the path to where images should be uploaded and served
 
 public class DBConstants {
 	/** Path to folder holding images to be served */
