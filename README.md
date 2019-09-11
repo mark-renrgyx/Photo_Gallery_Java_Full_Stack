@@ -17,11 +17,11 @@ https://drive.google.com/drive/u/0/folders/1rWj1To9joq7GnTEcjiYjaPWle6H1gMKB
 2. (apache) commons-fileupload-1.4-sources.jar
 
 ## Configuration
-Modify the DBConstants.java file for your system (path to folder holding images)
+Under the `config_templates` folder, modify the DBConstants.java file for your system (path to folder holding images) and move it to
 
     src/db/DBConstants.java
 
-Modify hibernate XML config (username, password).  (It is set up for MySQL5, modify if needed.)
+Modify hibernate XML config (username, password).  (It is set up for MySQL5, modify if needed.)  Move it to
     
     src/hibernate.cfg.xml
    
