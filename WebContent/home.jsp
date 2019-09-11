@@ -2,12 +2,12 @@
 	pageEncoding="UTF-8"%>
 
 <%@page import="java.sql.ResultSet"%>
-<%@page import="db.DBUtility"%>
-<%@page import="db.DBConnection"%>
 <%@page import="java.sql.Connection"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Iterator"%>
+<%@ page import ="entities.User" %>
+<%@ page import = "db.HibernateUtil" %>
 
 <!DOCTYPE html>
 <html>
@@ -60,11 +60,16 @@
 				</form>
 			</div>
 		</div>
-
+<%
+response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
+response.setHeader("Pragma","no-cache"); //HTTP 1.0
+response.setDateHeader ("Expires", 0);
+//prevents caching at the proxy server
+%>
 		<%
 			//TODO move to seperate class to implement different sorting and searching methods
-			String user = (String) request.getSession().getAttribute("user"); // user ID
-			List<String> dbImages = DBUtility.getImages(user);
+			Integer userId = (Integer) request.getSession().getAttribute("user"); // user ID
+			List<String> dbImages = HibernateUtil.getImages(userId);
 			
 			Iterator<String> imageCursor = dbImages.iterator();
 			
@@ -74,6 +79,7 @@
 				taggedImages += imageCursor.next();
 				taggedImages += "'></div> \n";
 			}
+			//System.out.println(taggedImages); // TODO: remove
 		%>
 
 		<div class="gallery">

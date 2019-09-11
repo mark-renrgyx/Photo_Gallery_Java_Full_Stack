@@ -2,8 +2,6 @@
 # Created by https://www.gitignore.io/api/java,eclipse
 # Edit at https://www.gitignore.io/?templates=java,eclipse
 
-DBConstants.java
-
 ### Eclipse ###
 .metadata
 bin/
@@ -76,3 +74,4 @@ hs_err_pid*
 /build/
 src/db/DBConstants.java
 /WebContent/img
+src/hibernate.cfg.xml
