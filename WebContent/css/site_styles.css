@@ -6,10 +6,10 @@ body {
 
 h1 {
 	color: #1A237E; /* indigo 900 */
-	font: 6em 'Great Vibes', Helvetica, sans-serif;
+	font: 5.5em 'Great Vibes', Helvetica, sans-serif;
 	/*text-shadow: 4px 4px 3px rgba(0,0,0,0.1); */
 	margin-block-start: 0em;
-    margin-block-end: .05em;
+    margin-block-end: 0em;
 }
 
 h2 {
@@ -32,6 +32,11 @@ div.gallery_container {
 	text-align: center;
 }
 
+div.gallery_container > form > table {
+	margin-left: auto;
+	margin-right: auto;
+}
+
 div.gallery_container > div {
 	display: inline-block;
 	clear: both;
@@ -44,12 +49,23 @@ div.gallery {
 }
 
 div#controls {
-	border-width: 2px; 
+	position: fixed;
+	left: 50%;
+	margin-left: -20em;
+	top: 0px;
+	border-width: 5px; 
 	border-style: solid;
 	border-color: #1A237E; /* indigo 900 */
-	background: white;
+	background: #C5CAE9; /* indigo 100 */
 	display: inline-block;
 	width: auto;
+	z-index: 1001;
+	border-radius: 0px 0px 7px 7px;
+	
+	/*display: flex; /* make us of Flexbox */
+	/*align-items: center; /* does vertically center the desired content */
+	/*justify-content: center; /* horizontally centers single line items */
+	/*text-align: center; /* optional, but helps horizontally center text that breaks into multiple lines */
 }
 
 td > p {
@@ -85,4 +101,8 @@ td > p {
 .thumbnail_container:hover {
 	padding: 1px;
 	border: 1px solid #9FA8DA; /* indigo 200 */
+}
+
+#first {
+	margin-top: 0.5em;
 }

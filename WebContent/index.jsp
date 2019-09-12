@@ -15,6 +15,7 @@
 
 <body>
 
+<div class="gallery_container">
 <noscript><h1>You should enable Javascript to enjoy the full awesomeness of this page</h1></noscript>
 
 <h1>Welcome to the Web Gallery</h1>
@@ -31,12 +32,12 @@
 	}
 %>
 
-<p>You should log in!</p>
+<h2>You should log in</h2>
 <form action="Login" method="post">
 <table>
 	<tr>
 		<td><p>Email Address</p></td>
-		<td><input type="text" name="email" value="test"></td>
+		<td><input type="text" name="email"></td>
 	</tr>
 	<tr>
 		<td><p>Password</p></td>
@@ -51,5 +52,6 @@
 
 <p>Don't have an account yet?  Make one <a href="registration.jsp">here</a></p>
 
+</div>
 </body>
 </html>
