@@ -11,7 +11,8 @@
 <body>
 <!-- Once logged on, show photos and functionality -->
 
-	<h2>Choose file to upload</h2>
+<div class="gallery_container">
+	<h1>Choose File to upload</h1>
 	
 	<form action="FileUploadHandler" method="post" enctype="multipart/form-data">
 		<input type="file" name="file" /> 
@@ -27,6 +28,6 @@
 		</select> <br/>
 		<input type="submit" value="upload" />
 	</form>
-
+</div>
 </body>
 </html>
