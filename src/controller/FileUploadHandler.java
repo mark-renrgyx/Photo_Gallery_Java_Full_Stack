@@ -29,8 +29,9 @@ import entities.User;
 @WebServlet("/FileUploadHandler")
 public class FileUploadHandler extends HttpServlet {
 	private final String UPLOAD_DIRECTORY = DBConstants.uploadDirectory;
+	private final String DOWNLOAD_DIRECTORY = DBConstants.downloadDirectory;
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -40,62 +41,59 @@ public class FileUploadHandler extends HttpServlet {
 		if (!uploadFolder.exists())
 			uploadFolder.mkdir();
 	}
-	
+
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
 		Session session = HibernateConnection.getSession();
-		
+		String category = "null";
 		Integer userId = (Integer) request.getSession().getAttribute("user");
-		String category = (String) request.getParameter("category");
-		System.out.println("CATEGORY: " + category); // TODO was a test, can't fix this
-		
+
 		// Process if Multipart Content
 		if (ServletFileUpload.isMultipartContent(request)) {
 			try {
 				List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-				
+
 				for (FileItem item : multiparts) {
-					if (!item.isFormField()) {
-						Date date = new Date();
-						SimpleDateFormat sqlformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-						SimpleDateFormat fileformat = new SimpleDateFormat("yyyyMMddHHmmss");
-						
-						String name = new File(item.getName()).getName();
-						String filename = fileformat.format(date) + name;
+					Date date = new Date();
+					SimpleDateFormat sqlformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					SimpleDateFormat fileformat = new SimpleDateFormat("yyyyMMddHHmmss");
+					String filename = "";
+					String name="";
+					if (item.isFormField()) {
+						String fieldName = item.getFieldName();
+						System.out.println(item.getFieldName());
+						if (fieldName.equals("category")) {
+							category = item.getString();
+							System.out.println(item.getString());
+						}
+					} else if (!item.isFormField()) {
+
+						name = new File(item.getName()).getName();
+						filename = fileformat.format(date) + name;
 						String fullpath = UPLOAD_DIRECTORY + File.separator + filename;
 						// Create file as image + date for uniqueness
 						item.write(new File(fullpath));
-						
-//						String hql = "FROM User U WHERE U.id = '" + userId + "'";
-//						Query<User> query = session.createQuery(hql, User.class);
-//						List<User> users = query.getResultList();
-//						
-//						User theUser = users.get(0); // TODO ... this seems dangerous
-						
-						session.beginTransaction();
-						
-						User theUser = session.get(User.class, userId);
-//						User dummy = session.load(User.class, userId); // entityManager.getReference or session.load should do the trick too
-						
-						Image image = new Image();
-						image.setUser(theUser);
-						image.setReference(fullpath);
-						image.setCategory(category);
-						image.setDate(sqlformat.format(date));
-						image.setFilename(filename);
-						
-//						System.out.println("Ready to INSERT " + image.toString());
-						
-						String result = (String) session.save(image);
-						System.out.println("Result of image insertion: " + result); // TODO testing
-						
-						session.getTransaction().commit();
+
 					}
+					session.beginTransaction();
+
+					User theUser = session.get(User.class, userId);
+					Image image = new Image();
+					image.setUser(theUser);
+					image.setReference(DOWNLOAD_DIRECTORY + filename);
+					image.setCategory(category);
+					image.setDate(sqlformat.format(date));
+					image.setFilename(name);
+					theUser.addImage(image);
+
+					session.save(image);
+					session.getTransaction().commit();
+
 				}
 				touchTxt();
 				// File uploaded successfully
@@ -105,14 +103,14 @@ public class FileUploadHandler extends HttpServlet {
 				e.printStackTrace();
 				request.setAttribute("message", "File Upload Failed due to " + e.getMessage());
 			}
-			
+
 		} else {
 			request.setAttribute("message", "Sorry this Servlet is only for files");
 		}
-		
+
 		response.sendRedirect("home.jsp");
 	}
-	
+
 	private void touchTxt() {
 		File file = new File(DBConstants.uploadDirectory + File.separator + "touch.txt");
 		FileWriter fileWriter;
@@ -121,7 +119,7 @@ public class FileUploadHandler extends HttpServlet {
 //			String timeStamp = new Date().toString();
 //			File newFile = new File(folder + File.separator + "log-" + timeStamp + ".txt");
 //			file.renameTo(newFile);
-		
+
 		} else {
 			try {
 				file.createNewFile();
@@ -138,7 +136,7 @@ public class FileUploadHandler extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
+
 //	/**
 //	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 //	 */

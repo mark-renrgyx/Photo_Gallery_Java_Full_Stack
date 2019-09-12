@@ -70,6 +70,6 @@ public class Image {
 	
 	@Override
 	public String toString() {
-		return "Image [user=" + user + ", filename=" + filename + ", date=" + date + "]";
+		return "Image [filename=" + filename + ", date=" + date + "]";
 	}
 }

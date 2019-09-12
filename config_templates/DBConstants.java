@@ -1,8 +1,7 @@
 package db;
 
-// Move this file to `src/db` and update uploadDirectory for the path to where images should be uploaded and served
-
 public class DBConstants {
-	/** Path to folder holding images to be served */
-	public static String uploadDirectory = "/Users/YOUR_USERNAME/eclipse-workspace/PhotoGalleryAgain/WebContent/img";
+	
+	public static String uploadDirectory = "C:/Users/torrt/eclipse-workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/webapps/img"; // "/Users/mark/Documents/img";
+	public static String downloadDirectory = "../img/"; // "/Users/mark/Documents/img";
 }
