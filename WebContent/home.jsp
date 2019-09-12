@@ -31,7 +31,7 @@
 <body>
 
 	<div class="gallery_container">
-		<h1>
+		<h1 id="first">
 			Welcome
 			<%=request.getSession().getAttribute("name")%>!
 		</h1>

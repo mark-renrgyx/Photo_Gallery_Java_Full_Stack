@@ -10,7 +10,7 @@
 </head>
 <body>
 <!-- Once logged on, show photos and functionality -->
-
+<div class="gallery_container">
 	<h2>Choose file to upload</h2>
 	
 	<form action="FileUploadHandler" method="post" enctype="multipart/form-data" id="upload">
@@ -28,5 +28,6 @@
 			<option value="Food">Food</option>
 			<option value="Things">Things</option>
 	</select> 
+</div>
 </body>
 </html>
