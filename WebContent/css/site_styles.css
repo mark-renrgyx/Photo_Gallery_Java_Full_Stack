@@ -37,15 +37,18 @@ div.gallery_container > form > table {
 	margin-right: auto;
 }
 
-div.gallery_container > div {
+/*div.gallery_container > div {
 	display: inline-block;
 	clear: both;
 	width: 80%;
-}
+}*/
 
 div.gallery {
 	background: white;
 	padding-bottom: 256px;
+	display: inline-block;
+	clear: both;
+	width: 80%;
 }
 
 div#controls {
@@ -105,4 +108,19 @@ td > p {
 
 #first {
 	margin-top: 0.5em;
+}
+
+div.dialog {
+	margin-top: 15px;
+	border: 5px solid #1A237E; /* indigo 900 */
+	border-radius: 6px;
+	padding: 4px;
+	
+	display: inline-block;
+	clear: both;
+	width: auto;
+}
+
+div.dialog > p {
+	margin: 4px;
 }

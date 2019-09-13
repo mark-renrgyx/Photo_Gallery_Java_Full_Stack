@@ -13,21 +13,22 @@
 <div class="gallery_container">
 	<h2>Choose file to upload</h2>
 	
-	<form action="FileUploadHandler" method="post" enctype="multipart/form-data" id="upload">
-		<input type="file" name="file" /> 
-		<input type="submit" value="upload" />
-		
-	</form>
-	<br/>
-	<select name="category" form="upload">
-			<option value="Other">Other</option>
-			<option value="Events">Events</option>
-			<option value="People">People</option>
-			<option value="Animals">Animals</option>
-			<option value="Places">Places</option>
-			<option value="Food">Food</option>
-			<option value="Things">Things</option>
-	</select> 
+	<div class="dialog">
+		<form action="FileUploadHandler" method="post" enctype="multipart/form-data" id="upload">
+			<input type="file" name="file" />
+			<input type="submit" value="upload" />
+		</form>
+		<br/>
+		<select name="category" form="upload">
+				<option value="Other">Other</option>
+				<option value="Events">Events</option>
+				<option value="People">People</option>
+				<option value="Animals">Animals</option>
+				<option value="Places">Places</option>
+				<option value="Food">Food</option>
+				<option value="Things">Things</option>
+		</select>
+	</div>
 </div>
 </body>
 </html>

@@ -33,25 +33,26 @@
 %>
 
 <h2>You should log in</h2>
-<form action="Login" method="post">
-<table>
-	<tr>
-		<td><p>Email Address</p></td>
-		<td><input type="text" name="email"></td>
-	</tr>
-	<tr>
-		<td><p>Password</p></td>
-		<td><input type="password" name="password"></td>
-	</tr>
-	<tr>
-		<td></td>
-		<td><input type="submit"></td>
-	</tr>
-</table>
-</form>
+<div class="dialog">
+	<form action="Login" method="post">
+	<table>
+		<tr>
+			<td><p>Email Address</p></td>
+			<td><input type="text" name="email"></td>
+		</tr>
+		<tr>
+			<td><p>Password</p></td>
+			<td><input type="password" name="password"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="submit"></td>
+		</tr>
+	</table>
+	</form>
 
-<p>Don't have an account yet?  Make one <a href="registration.jsp">here</a></p>
-
+	<p>Don't have an account yet?  Make one <a href="registration.jsp">here</a></p>
+</div>
 </div>
 </body>
 </html>
