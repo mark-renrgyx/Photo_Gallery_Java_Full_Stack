@@ -29,14 +29,7 @@
 <title>Gallery</title>
 </head>
 <body>
-
-	<div class="gallery_container">
-		<h1 id="first">
-			Welcome
-			<%=request.getSession().getAttribute("name")%>!
-		</h1>
-		<h2>This is your super-awesome gallery</h2>
-		<div id="controls">
+<div id="controls">
 			<div class="option">
 				<form action="upload.jsp">
 					<input type="submit" value="Upload a file">
@@ -70,6 +63,14 @@
 				</form>
 			</div>
 		</div>
+
+	<div class="gallery_container">
+		<h1 id="first">
+			Welcome
+			<%=request.getSession().getAttribute("name")%>!
+		</h1>
+		<h2>This is your super-awesome gallery</h2>
+		
 		<%
 			response.setHeader("Cache-Control", "no-cache"); //HTTP 1.1
 			response.setHeader("Pragma", "no-cache"); //HTTP 1.0
@@ -88,10 +89,10 @@
 				images=HibernateUtil.allImages(userId);
 			} else if (type.equals("search")) { 
 				System.out.println("Type: search");
-				images=HibernateUtil.searchImages(userId, request.getParameter("search"));
+				images=HibernateUtil.searchImages(userId, request.getParameter("filter"));
 			} else if (type.equals("sort")) { 
 				System.out.println("Type: sort");
-				images=HibernateUtil.sortImages(userId, request.getParameter("sort"));
+				images=HibernateUtil.sortImages(userId, request.getParameter("filter"));
 			} else{
 				out.print("Done goofed");
 			}

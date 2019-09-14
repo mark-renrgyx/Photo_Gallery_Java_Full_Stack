@@ -53,22 +53,46 @@ div.gallery {
 
 div#controls {
 	position: fixed;
+	top: 0px;
+	left: 0px;
+	/* left: 50%;
+	margin-left: -20em; */
+	/* box-shadow: none|h-offset v-offset blur spread color |inset|initial|inherit; */
+	box-shadow: 0px 5px 10px 0px #5C6BC0; /* indigo 400  */
+	
+	width: 100%;
+	
+/* 	border-width: 5px; 
+	border-style: solid;
+	border-color: #1A237E; indigo 900 */
+	background: #E8EAF6; /* indigo 50 */
+	display: inline-block;
+	z-index: 1001;
+	/* border-radius: 0px 0px 7px 7px; */
+	
+/* 	position: fixed;
 	left: 50%;
 	margin-left: -20em;
 	top: 0px;
 	border-width: 5px; 
 	border-style: solid;
-	border-color: #1A237E; /* indigo 900 */
-	background: #C5CAE9; /* indigo 100 */
+	border-color: #1A237E; indigo 900
+	background: #C5CAE9; indigo 100
 	display: inline-block;
 	width: auto;
 	z-index: 1001;
-	border-radius: 0px 0px 7px 7px;
-	
-	/*display: flex; /* make us of Flexbox */
-	/*align-items: center; /* does vertically center the desired content */
-	/*justify-content: center; /* horizontally centers single line items */
-	/*text-align: center; /* optional, but helps horizontally center text that breaks into multiple lines */
+	border-radius: 0px 0px 7px 7px; */
+}
+
+.option {
+	padding: 5px;
+/* 	border-width: 3px;
+	border-style: solid;
+	border-color: #1A237E; indigo 900 */
+	clear: none;
+	display: inline-block;
+	margin: -2px;
+	height: 1.2em;
 }
 
 td > p {
@@ -76,17 +100,6 @@ td > p {
     margin-block-end: 0em;
 }
 
-.option {
-	padding: 5px;
-	border-width: 3px;
-	border-style: solid;
-	border-color: #1A237E; /* indigo 900 */
-	clear: none;
-	display: inline-block;
-	margin: -2px;
-	background: #9FA8DA; /* indigo 200 */
-	height: 1.2em;
-}
 
 .thumbnail {
 	max-width: 100%;
@@ -112,13 +125,18 @@ td > p {
 
 div.dialog {
 	margin-top: 15px;
-	border: 5px solid #1A237E; /* indigo 900 */
-	border-radius: 6px;
-	padding: 4px;
+	/*border: 5px solid #1A237E; /* indigo 900 */
+	border-radius: 3px;
+	padding: 8px;
 	
 	display: inline-block;
 	clear: both;
 	width: auto;
+	background: #E8EAF6; /* indigo 50 */
+	
+	/* box-shadow: none|h-offset v-offset blur spread color |inset|initial|inherit; */
+	box-shadow: 15px 15px 10px 4px #5C6BC0; /* indigo 400 */
+	/*box-shadow: 20px 20px 10px 8px #5C6BC0; /* indigo 400 */
 }
 
 div.dialog > p {

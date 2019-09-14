@@ -21,7 +21,7 @@ public class HibernateUtil {
 	 */
 	public static String allImages(Integer userId) {
 		String images = "";
-
+		
 		User theUser = session.get(User.class, userId);
 		if (theUser == null) {
 			System.err.println("Why are we getting images for nobody?");
@@ -52,7 +52,7 @@ public class HibernateUtil {
 	
 	public static String searchImages(Integer userId, String search) {
 		String images = "";
-
+		
 		User theUser = session.get(User.class, userId);
 		if (theUser == null) {
 			System.err.println("Why are we getting images for nobody?");
@@ -68,7 +68,7 @@ public class HibernateUtil {
 		
 		while (it.hasNext()) {
 			Image img = it.next();
-			if (img.getFilename().equals(search)){
+			if (img.getFilename().contains(search)) {
 				filenames.add(img.getReference());
 			}
 		}
@@ -86,7 +86,7 @@ public class HibernateUtil {
 	
 	public static String sortImages(Integer userId, String sort) {
 		String images = "";
-
+		
 		User theUser = session.get(User.class, userId);
 		if (theUser == null) {
 			System.err.println("Why are we getting images for nobody?");
@@ -102,7 +102,7 @@ public class HibernateUtil {
 		
 		while (it.hasNext()) {
 			Image img = it.next();
-			if (img.getCategory().equals(sort)){
+			if (img.getCategory().equals(sort)) {
 				filenames.add(img.getReference());
 			}
 		}
