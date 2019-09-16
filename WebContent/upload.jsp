@@ -15,8 +15,10 @@
 	
 	<div class="dialog">
 		<form action="FileUploadHandler" method="post" enctype="multipart/form-data" id="upload">
-			<input type="file" name="file" />
-			<input type="submit" value="upload" />
+			<label for="file_upload" class="custom_file_upload">
+				Choose your file</label>
+			<input id="file_upload" type="file" name="file" />
+			<input type="submit" value="Upload" />
 		</form>
 		<br/>
 		<select name="category" form="upload">

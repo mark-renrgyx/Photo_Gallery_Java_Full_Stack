@@ -141,3 +141,26 @@ div.dialog {
 div.dialog > p {
 	margin: 4px;
 }
+
+input[type=submit] {
+    color: black;
+}
+
+input[type=file] {
+    color: black;
+}
+
+label.custom_file_upload {
+	font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
+	color: black;
+	font-size: 11px;
+	cursor: pointer;
+	border: 1px solid silver;
+	border-radius: 3px;
+	padding: 2px 8px;
+	background-color: white;
+}
+
+input[type="file"] {
+    display: none;
+}
