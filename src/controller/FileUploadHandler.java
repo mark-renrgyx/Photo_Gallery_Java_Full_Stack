@@ -69,7 +69,7 @@ public class FileUploadHandler extends HttpServlet {
 						System.out.println(item.getFieldName());
 						if (fieldName.equals("category")) {
 							category = item.getString();
-							System.out.println(item.getString());
+//							System.out.println(item.getString());
 						}
 					} else if (!item.isFormField()) {
 						
