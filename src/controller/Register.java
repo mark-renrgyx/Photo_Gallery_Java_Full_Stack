@@ -48,11 +48,9 @@ public class Register extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String hashedPassword = HibernateUtil.sha256(password);
-		System.out.println("hashed: " + hashedPassword); // TODO: remove
 		
 		Session session = HibernateConnection.getSession();
 		
-//		String hql = "SELECT U.id FROM User U WHERE U.email = '" + email + "'";
 		String hql = "FROM User U WHERE U.email = '" + email + "'";
 		Query<User> query = session.createQuery(hql, User.class);
 		List<User> users = query.getResultList();
