@@ -10,23 +10,27 @@
 </head>
 <body>
 <!-- Once logged on, show photos and functionality -->
-
+<div class="gallery_container">
 	<h2>Choose file to upload</h2>
 	
-	<form action="FileUploadHandler" method="post" enctype="multipart/form-data">
-		<input type="file" name="file" /> 
-		
-		<select name="category">
-			<option value="Events">Events</option>
-			<option value="People">People</option>
-			<option value="Animals">Animals</option>
-			<option value="Places">Places</option>
-			<option value="Food">Food</option>
-			<option value="Things">Things</option>
-			<option value="Other">Other</option>
-		</select> <br/>
-		<input type="submit" value="upload" />
-	</form>
-
+	<div class="dialog">
+		<form action="FileUploadHandler" method="post" enctype="multipart/form-data" id="upload">
+			<label for="file_upload" class="custom_file_upload">
+				Choose your file</label>
+			<input id="file_upload" type="file" name="file" />
+			<input type="submit" value="Upload" />
+		</form>
+		<br/>
+		<select name="category" form="upload">
+				<option value="Other">Other</option>
+				<option value="Events">Events</option>
+				<option value="People">People</option>
+				<option value="Animals">Animals</option>
+				<option value="Places">Places</option>
+				<option value="Food">Food</option>
+				<option value="Things">Things</option>
+		</select>
+	</div>
+</div>
 </body>
 </html>

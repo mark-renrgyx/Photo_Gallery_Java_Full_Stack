@@ -48,11 +48,9 @@ public class Register extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String hashedPassword = HibernateUtil.sha256(password);
-		System.out.println("hashed: " + hashedPassword); // TODO: remove
 		
 		Session session = HibernateConnection.getSession();
 		
-//		String hql = "SELECT U.id FROM User U WHERE U.email = '" + email + "'";
 		String hql = "FROM User U WHERE U.email = '" + email + "'";
 		Query<User> query = session.createQuery(hql, User.class);
 		List<User> users = query.getResultList();
@@ -62,12 +60,14 @@ public class Register extends HttpServlet {
 			out.append("<p class='error' style='color:red;'>Registration Failed. User Already Exists.</p>");
 			request.getRequestDispatcher("registration.jsp").include(request, response);
 		} else {
+			session.beginTransaction();
 			User newUser = new User();
 			newUser.setEmail(email);
 			newUser.setName(name);
 			newUser.setPassword(hashedPassword);
 			
 			Integer result = (Integer) session.save(newUser);
+			session.getTransaction().commit();
 //			// log in
 //			request.getSession().setAttribute("loggedIn", Boolean.valueOf(true));
 //			request.getSession().setAttribute("user", newUser.getId());

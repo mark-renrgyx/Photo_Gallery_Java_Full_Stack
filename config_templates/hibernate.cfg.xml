@@ -18,4 +18,3 @@
         <mapping class="entities.Image"/>
     </session-factory>
 </hibernate-configuration>
-

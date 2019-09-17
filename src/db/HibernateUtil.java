@@ -19,37 +19,103 @@ public class HibernateUtil {
 	 * 
 	 * @return
 	 */
-	public static List<String> getImages(Integer user_id) {
+	public static String allImages(Integer userId) {
+		String images = "";
 		
-//		List<Image> images = session.createQuery("From Image where user_id='" + user_id + "'").list();
-	
-//		String hql = "SELECT I.filename FROM image I WHERE I.user_id = " + user_id;
-//		Query<String> query = session.createQuery(hql, String.class);
-//		List<String> filenames = query.list();
-//		
-//		return filenames;
-	
-//		if (user_id == null) // TODO: Who knows?
-//			return new ArrayList<String>();
-		
-		User theUser = session.get(User.class, user_id);
+		User theUser = session.get(User.class, userId);
 		if (theUser == null) {
 			System.err.println("Why are we getting images for nobody?");
-			return new ArrayList<String>();
+			return images;
 		}
 		
-		List<Image> images = theUser.getImages();
-		if (images == null)
-			return new ArrayList<String>();
+		List<Image> imageList = theUser.getImages();
+		if (imageList == null)
+			return images;
 		
-		Iterator<Image> it = images.iterator();
+		Iterator<Image> it = imageList.iterator();
 		List<String> filenames = new ArrayList<String>();
 		
 		while (it.hasNext()) {
-			filenames.add("img" + "/" + it.next().getFilename());
+			filenames.add(it.next().getReference());
 		}
 		
-		return filenames;
+		Iterator<String> imageCursor = filenames.iterator();
+		
+		while (imageCursor.hasNext()) {
+			images += "<div class='thumbnail_container resizable'><img class='thumbnail' src='";
+			images += imageCursor.next();
+			images += "'></div> \n";
+		}
+		
+		return images;
+	}
+	
+	public static String searchImages(Integer userId, String search) {
+		String images = "";
+		
+		User theUser = session.get(User.class, userId);
+		if (theUser == null) {
+			System.err.println("Why are we getting images for nobody?");
+			return images;
+		}
+		
+		List<Image> imageList = theUser.getImages();
+		if (imageList == null)
+			return images;
+		
+		Iterator<Image> it = imageList.iterator();
+		List<String> filenames = new ArrayList<String>();
+		
+		while (it.hasNext()) {
+			Image img = it.next();
+			if (img.getFilename().contains(search)) {
+				filenames.add(img.getReference());
+			}
+		}
+		
+		Iterator<String> imageCursor = filenames.iterator();
+		
+		while (imageCursor.hasNext()) {
+			images += "<div class='thumbnail_container resizable'><img class='thumbnail' src='";
+			images += imageCursor.next();
+			images += "'></div> \n";
+		}
+		
+		return images;
+	}
+	
+	public static String sortImages(Integer userId, String sort) {
+		String images = "";
+		
+		User theUser = session.get(User.class, userId);
+		if (theUser == null) {
+			System.err.println("Why are we getting images for nobody?");
+			return images;
+		}
+		
+		List<Image> imageList = theUser.getImages();
+		if (imageList == null)
+			return images;
+		
+		Iterator<Image> it = imageList.iterator();
+		List<String> filenames = new ArrayList<String>();
+		
+		while (it.hasNext()) {
+			Image img = it.next();
+			if (img.getCategory().equals(sort)) {
+				filenames.add(img.getReference());
+			}
+		}
+		
+		Iterator<String> imageCursor = filenames.iterator();
+		
+		while (imageCursor.hasNext()) {
+			images += "<div class='thumbnail_container resizable'><img class='thumbnail' src='";
+			images += imageCursor.next();
+			images += "'></div> \n";
+		}
+		
+		return images;
 	}
 	
 	public static String sha256(String base) { // from https://stackoverflow.com/questions/3103652/hash-string-via-sha-256-in-java/3103727#3103727

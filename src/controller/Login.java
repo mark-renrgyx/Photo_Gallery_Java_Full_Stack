@@ -53,7 +53,7 @@ public class Login extends HttpServlet {
 		Query<User> query = session.createQuery(hql, User.class);
 		List<User> users = query.getResultList();
 		
-		// Check if user exists
+		// Check if user with that password exists
 		
 		if (users.size() > 0) {
 			// Set user session

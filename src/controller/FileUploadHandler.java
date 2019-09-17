@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,6 +28,7 @@ import entities.User;
 @WebServlet("/FileUploadHandler")
 public class FileUploadHandler extends HttpServlet {
 	private final String UPLOAD_DIRECTORY = DBConstants.uploadDirectory;
+	private final String DOWNLOAD_DIRECTORY = DBConstants.downloadDirectory;
 	private static final long serialVersionUID = 1L;
 	
 	/**
@@ -47,57 +47,52 @@ public class FileUploadHandler extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
 		Session session = HibernateConnection.getSession();
-		
+		String category = "null";
 		Integer userId = (Integer) request.getSession().getAttribute("user");
-		String category = (String) request.getParameter("category");
-		System.out.println("CATEGORY: " + category); // TODO was a test, can't fix this
 		
 		// Process if Multipart Content
 		if (ServletFileUpload.isMultipartContent(request)) {
 			try {
 				List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
 				
+				Date date = new Date();
+				SimpleDateFormat sqlformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				SimpleDateFormat fileformat = new SimpleDateFormat("yyyyMMddHHmmss");
+				String filename = "";
+				String name = "";
+				
 				for (FileItem item : multiparts) {
-					if (!item.isFormField()) {
-						Date date = new Date();
-						SimpleDateFormat sqlformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-						SimpleDateFormat fileformat = new SimpleDateFormat("yyyyMMddHHmmss");
+					
+					if (item.isFormField()) {
+						String fieldName = item.getFieldName();
+						System.out.println(item.getFieldName());
+						if (fieldName.equals("category")) {
+							category = item.getString();
+//							System.out.println(item.getString());
+						}
+					} else if (!item.isFormField()) {
 						
-						String name = new File(item.getName()).getName();
-						String filename = fileformat.format(date) + name;
+						name = new File(item.getName()).getName();
+						filename = fileformat.format(date) + name;
 						String fullpath = UPLOAD_DIRECTORY + File.separator + filename;
 						// Create file as image + date for uniqueness
 						item.write(new File(fullpath));
-						
-//						String hql = "FROM User U WHERE U.id = '" + userId + "'";
-//						Query<User> query = session.createQuery(hql, User.class);
-//						List<User> users = query.getResultList();
-//						
-//						User theUser = users.get(0); // TODO ... this seems dangerous
-						
-						session.beginTransaction();
-						
-						User theUser = session.get(User.class, userId);
-//						User dummy = session.load(User.class, userId); // entityManager.getReference or session.load should do the trick too
-						
-						Image image = new Image();
-						image.setUser(theUser);
-						image.setReference(fullpath);
-						image.setCategory(category);
-						image.setDate(sqlformat.format(date));
-						image.setFilename(filename);
-						
-//						System.out.println("Ready to INSERT " + image.toString());
-						
-						String result = (String) session.save(image);
-						System.out.println("Result of image insertion: " + result); // TODO testing
-						
-						session.getTransaction().commit();
 					}
 				}
-				touchTxt();
+				session.beginTransaction();
+				
+				User theUser = session.get(User.class, userId);
+				Image image = new Image();
+				image.setUser(theUser);
+				image.setReference(DOWNLOAD_DIRECTORY + filename);
+				image.setCategory(category);
+				image.setDate(sqlformat.format(date));
+				image.setFilename(name);
+				theUser.addImage(image);
+				
+				session.save(image);
+				session.getTransaction().commit();
 				// File uploaded successfully
 				request.setAttribute("message", "File Uploaded Successfully");
 			} catch (Exception e) {
@@ -112,83 +107,4 @@ public class FileUploadHandler extends HttpServlet {
 		
 		response.sendRedirect("home.jsp");
 	}
-	
-	private void touchTxt() {
-		File file = new File(DBConstants.uploadDirectory + File.separator + "touch.txt");
-		FileWriter fileWriter;
-		if (file.exists()) {
-//			String folder = file.getParent();
-//			String timeStamp = new Date().toString();
-//			File newFile = new File(folder + File.separator + "log-" + timeStamp + ".txt");
-//			file.renameTo(newFile);
-		
-		} else {
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-				System.err.println("Failed to create a log file");
-				e.printStackTrace();
-			}
-		}
-		try {
-			fileWriter = new FileWriter(file);
-			fileWriter.append('a');
-		} catch (IOException e) {
-			System.err.println("Failed to create writer");
-			e.printStackTrace();
-		}
-	}
-	
-//	/**
-//	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-//	 */
-//	@Override
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-//			throws ServletException, IOException {
-//		
-//		// Connect and get parameters
-//		Connection con = DBConnection.getDBInstance();
-//		DBUtility.useDB(con, "gallery");
-//		String query;
-//		String user = (String) request.getSession().getAttribute("user");
-//		String category = (String) request.getParameter("category");
-//		System.out.println("CATEGORY: " + category);
-//		
-//		// Process if Multipart Content
-//		if (ServletFileUpload.isMultipartContent(request)) {
-//			try {
-//				List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-//				
-//				for (FileItem item : multiparts) {
-//					if (!item.isFormField()) {
-//						Date date = new Date();
-//						SimpleDateFormat sqlformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//						SimpleDateFormat fileformat = new SimpleDateFormat("yyyyMMddHHmmss");
-//						
-//						String name = new File(item.getName()).getName();
-//						String filename = fileformat.format(date) + name;
-//						String fullpath = UPLOAD_DIRECTORY + File.separator + filename;
-//						// Create file as image + date for uniqueness
-//						item.write(new File(fullpath));
-//						
-//						// Save reference as image + date for uniqueness
-//						query = "INSERT INTO image (user, reference, filename, category, date) VALUES ('" + user
-//								+ "', '" + fullpath + "', '" + filename + "', '" + category + "', '"
-//								+ sqlformat.format(date) + "');";
-//						DBUtility.executeUpdate(con, query);
-//					}
-//				}
-//				
-//				// File uploaded successfully
-//				request.setAttribute("message", "File Uploaded Successfully");
-//			} catch (Exception e) {
-//				request.setAttribute("message", "File Upload Failed due to " + e.getMessage());
-//			}
-//			
-//		} else {
-//			request.setAttribute("message", "Sorry this Servlet is only for files");
-//		}
-//		
-//		response.sendRedirect("home.jsp");
-//	}
 }
